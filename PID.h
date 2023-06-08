@@ -1,9 +1,7 @@
+#ifndef PID_CONTROLLER_H
+#define PID_CONTROLLER_H
 
-
-
-class PID
-{
-	typedef struct {
+typedef struct {
 
 	/* Controller gains */
 	float Kp;
@@ -33,18 +31,9 @@ class PID
 	/* Controller output */
 	float out;
 
-	} PIDconfig;
+} PIDController;
 
+void  PIDController_Init(PIDController *pid);
+int PIDController_Update(PIDController *pid, float setpoint, float measurement);
 
-public:
-	explicit PID();
-	int Update(float setpoint, float measurement);
-	inline void SetGains(float kp, float ki, float kd) { m_Config->Kp = kp; m_Config->Ki = ki; m_Config->Kd = kd; }
-	inline void SetTime(float time) { m_Config->T = time; }
-	inline void SetTau(float tau) { m_Config->tau = tau; }
-	inline void SetLimits(float min, float max) { m_Config->limMin = min; m_Config->limMax = max; }
-	inline void SetIntegralLimits(float min, float max) { m_Config->limMinInt = min; m_Config->limMaxInt = max; }
-
-private:
-	PIDconfig* m_Config;
-};
+#endif
